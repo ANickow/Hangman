@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#gallows{
+    background-image: url('gallows.png');
+    background-size: cover;
+    height: 300px;
+    width: 300px;
+    display: inline-block;
+}
+
+#head{
+    border: 4px solid black;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 113px;
+    left: 142px;
+    display:none;
+    background-image: none;
+    background-size: cover;
+}
+
+#body{
+    border: 2px solid black;
+    height: 70px;
+    width: 0px;
+    position: absolute;
+    top: 168px;
+    left: 169px;
+    display:none;
+}
+
+#left_arm {
+    height: 40px;
+    width: 0px;
+    border-right: 4px solid black;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(45deg);
+    position: absolute;
+    top: 168px;
+    left: 149px;
+    display: none;
+}
+
+#right_arm {
+    height: 40px;
+    width: 0px;
+    border-right: 4px solid black;
+    -moz-transform: skew(-45deg);
+    -webkit-transform: skew(-45deg);
+    transform: skew(-45deg);
+    position: absolute;
+    top: 168px;
+    left: 189px;
+    display: none;
+}
+
+#right_leg {
+    height: 40px;
+    width: 0px;
+    border-right: 4px solid black;
+    -moz-transform: skew(135deg);
+    -webkit-transform: skew(135deg);
+    transform: skew(135deg);
+    position: absolute;
+    top: 240px;
+    left: 149px;
+    display: none;
+}
+
+#left_leg {
+    height: 40px;
+    width: 0px;
+    border-right: 4px solid black;
+    -moz-transform: skew(-135deg);
+    -webkit-transform: skew(-135deg);
+    transform: skew(-135deg);
+    position: absolute;
+    top: 240px;
+    left: 189px;
+    display: none;
+}
+
+#game{
+    display: inline-block;
+    height: 300px;
+    vertical-align: top;
+    padding-top: 20px;
+}
+
+button{
+    padding: 5px;
+}
+
+#letters{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.letter{
+    border-bottom: 4px solid black;
+    margin-left: 3px;
+    width: 20px;
+    text-align: center;
+    color: white;
+}
+
+input{
+    padding: 4px;
+    width: 30px;
+}
+
+#guessing{
+    display: none;
+}
