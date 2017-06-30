@@ -98,10 +98,14 @@ button{
     padding: 5px;
 }
 
+/*#start_over{
+    display: none;
+}*/
+
 #letters{
     display: flex;
     justify-content: space-around;
-    margin-top: 50px;
+    margin: 50px auto;
 }
 
 .letter{
@@ -118,5 +122,9 @@ input{
 }
 
 #guessing{
+    display: none;
+}
+
+#win, #loss{
     display: none;
 }

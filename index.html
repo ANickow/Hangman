@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="script.js"></script>
     <title>Hangman</title>
 </head>
@@ -24,18 +26,26 @@
                 <div id="right_leg" class="hung_man"></div>
             </div>
             <div id="game">
-                <button id="start">Click to start a game</button>
-                <br></br>
+                <!--<button id="start">Click to start a game</button>-->
+                <!--<br></br>-->
                 <div id="guessing">
                     <form>
-                        <input type="text" name="letter_guess" placeholder="ABC">
+                        <!--Data validation included to ensure guesses are no more than 1 alpha character in lower case -->
+                        <input type="text" name="letter_guess" placeholder="ABC" pattern="[a-z]{1}">
                         <button id="guess">Guess</button>
                     </form>
                 </div>
                 <div id="letters">
                 </div>
+                <button id="start_over">Start Over?</button>
             </div>
         </div>
+    </div>
+    <div id="win" title="You Won">
+        <p>Congratulations!  You won!  Way to go!!!!!</p>
+    </div>
+    <div id="loss" title="You Lost">
+        <p>You lost!  The word was </p>
     </div>
 </body>
 </html>

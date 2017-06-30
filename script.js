@@ -1,88 +1,107 @@
 $(document).ready(function(){
-
+    
     function RandomWord(){
-        var url = "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=3&maxLength=8&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
-        var gameWord;
+        var url = "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&minCorpusCount=1000&maxCorpusCount=-1&minDictionaryCount=20&maxDictionaryCount=-1&minLength=3&maxLength=8&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
         $.getJSON(url, function(wordData){
-            console.log(wordData.word);
-            GamePlay(wordData.word);
+            gameData.gameWord = wordData.word.toLowerCase();
+            GamePlay(gameData.gameWord);
         });
-        return gameWord;
     }
     var bodyParts = ["#head", "#body", "#left_arm", "#right_arm", "#left_leg", "#right_leg"];
-    var $letters = $('#letters');
-    var letterClass ='';
-    var hangManHangs ='';
-    var incorrectGuesses=0;
-    var correctGuesses=0;
-    var lettersGuessed = [];
+    var gameData;
+    var let;
+    // var letterClass ='';
+    // var hangManHangs ='';
+    // var incorrectGuesses=0;
+    // var correctGuesses=0;
+    // var lettersGuessed = [];
 
+    // function GamePlay(word){
     function GamePlay(word){
+        gameData.lettersGuessed = [];
+        gameData.incorrectGuesses = 0;
+        gameData.correctGuesses = 0;
+
         // Create the game board
-        var str;
         for (var i=0; i<word.length; i++){
-            str = '<div class="letter ' + word[i] + ' id="'+ i + '">' + word[i] + '</div>';
-            $letters.append(str);
+            gameData.gameBoard = '<div class="letter ' + word[i] + ' id="'+ i + '">' + word[i] + '</div>';
+            $('#letters').append(gameData.gameBoard);
         }
         // Check a guess against the word
         $('form').submit(function(event){
             event.preventDefault();
-            var let = $('input').val();
-            for (var k=0; k<lettersGuessed.length; k++){
-                if (let == lettersGuessed[k]){
-                    alert("You guessed that letter already.  Try another one");
+            let = $('input').val();
+            // Check if letter was guessed already
+            for (var k=0; k < gameData.lettersGuessed.length; k++){
+                if (let == gameData.lettersGuessed[k]){
                     return;
                 }
             }
+            if (let == '' || let == " "){
+                return;
+            }
             $('input').val('');
-            lettersGuessed.push(let);
+            
+            // Add letter to list of already guessed
+            gameData.lettersGuessed.push(let);
+            
+            // Check the letter against each letter until you find a match or the end of the word
             var j=0;
             while(word[j]!=let && j<word.length){
                 j++;
             }
             // Guess did not match - display a body part
             if (j==word.length){
-                hangManHangs = bodyParts[incorrectGuesses];
-                incorrectGuesses ++;
-                $(hangManHangs).show();
+                gameData.hangManHangs = bodyParts[gameData.incorrectGuesses];
+                gameData.incorrectGuesses ++;
+                $(gameData.hangManHangs).show();
             } else {
             // Guess matched - Display matching letters
-                letterClass = "." + let;
-                $(letterClass).css('color', 'black');
-                correctGuesses += $(letterClass).length;
+                gameData.letterClass = "." + let;
+                $(gameData.letterClass).css('color', 'black');
+                gameData.correctGuesses += $(gameData.letterClass).length;
             }
             // Losing the game
-            if (incorrectGuesses == 6){
+            if (gameData.incorrectGuesses == 6){
                 $('#head').css('background-image','url("dead_face.jpeg")');
-                GameReset();
+                $('#loss').append(word);
+                $('#start_over').focus();
+                $( function() {
+                    $("#loss").dialog();
+                });
+
             }
             // Winning the game
-            if (correctGuesses == word.length){
+            if (gameData.correctGuesses == word.length){
                 $('.hung_man').show();
+                $('.hung_man').css('border-color', 'white');
                 $('#head').css('background-image','url("smile.jpeg")');
-                GameReset();
+                $('#gallows').css('background-image','url("fireworks.gif"');
+                $('#start_over').focus();
+                $( function() {
+                    $("#win").dialog();
+                });
             }
-            console.log("Incorrect Guesses = " + incorrectGuesses);
-            console.log("Correct Guesses = " + correctGuesses);
+            // console.log(gameData);
         });
 
     }
 
-    function GameReset(){
-        letterClass ='';
-        hangManHangs ='';
-        incorrectGuesses=0;
-        correctGuesses=0;
-        lettersGuessed = [];
-    }
-
-    $('#start').click(function(){
+    function StartGame(){
+        gameData = {};
+        // console.log(gameData);
         $(".hung_man").css('display', 'none');
         $('#head').css('background-image', 'none');
-        $letters.html('');
+        $('#letters').html('');
         $('#guessing').show();
-        $(this).text('Start Over?');
+        // $(this).hide();
+        // $(this).siblings('button').show();
         RandomWord();
-    });
+    }
 
+    StartGame();
+
+    $('#start_over').click(function(){
+        window.location.reload();
+    });
 });
